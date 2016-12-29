@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test some Services in Social Media Network by Huynh Nam</title>
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/testSocialNetworkServices.js"></script>
+</head>
+<body>
+
+	<table style="width: 100%">
+		<tr>
+			<td>Test User Services</td>
+			<td><button type="button" onclick="Login();">Login</button> </td>
+			<td><button type="button" onclick="Logout();">Logout</button></td>
+			<td><button type="button" onclick="GetUserInfo();">Get User Info With UserId</button></td>
+			<td><button type="button" onclick="GetUserInfoFromToken();">Get User Info With TokenId</button></td>
+		</tr>
+		<tr>
+			<td>Test Friend Services</td>
+			<td><button type="button" onclick="SaveListFriend();">Save List Friend</button></td>
+			<td><button type="button" onclick="GetListFriend();">Get List Friend</button></td>
+		</tr>
+		<tr>
+			<td>Test Trip Services</td>
+			<td><button type="button" onclick="CreateTrip();">Create Trip</button></td>
+			<td><button type="button" onclick="GetListTrip();">Get List Trip</button></td>	
+			<td><button type="button" onclick="GetListPrivateTrip();">Get List Private Trip</button></td>
+			<td><button type="button" onclick="GetListPublicTrip();">Get List Public Trip</button></td>
+			<td><button type="button" onclick="GetListShareTrip();">Get List Share Trip</button></td>	
+			<td><button type="button" onclick="GetTripInfo();">Get Trip Info</button></td>			
+		</tr>	
+		<tr>
+			<td>Test Trip Detail Services</td>
+			<td><td><button type="button" onclick="CreatePointOnTrip();">Create Point On Trip</button></td>
+			<td><td><button type="button" onclick="GetListPointOnTrip();">Get List Point On Trip!</button></td>
+		</tr>	
+		<tr>
+			<td>Test Like Services</td>
+			<td><button type="button" onclick="LikeTrip();">Like Trip</button></td>
+			<td><button type="button" onclick="CountLikeOnTrip();">Count Like On Trip</button></td>
+		</tr>
+		<tr>
+			<td>Test Comment Services</td>
+			<td><button type="button" onclick="SaveCommentOnTrip();">Save Comment On Trip</button></td>
+			<td><button type="button" onclick="GetListCommentOnTrip();">Get List Comment</button></td>
+		</tr>
+		<tr>
+			<td>Test Share Services</td>
+			<td><button type="button" onclick="SaveShareOnTrip();">Share Trip</button></td>
+			<td><button type="button" onclick="GetShareOnTrip();">Get Share On Trip</button></td>
+		</tr>
+		<tr>
+			<td>Finding Path Services</td>
+			<td><button type="button" onclick="TestMultiPath();">Test multi-point path</button></td>
+		</tr>
+		
+		<tr>
+			<td>Upload Image on PointId Services</td>
+			<td>
+				<input id="fileInpput" type="file" onchange="encodeImageFileAsURL();"/>
+				<input id="sendData" type="submit" />
+				<script type='text/javascript'>
+				var dataImage;
+				var JSONObject = {};
+				function encodeImageFileAsURL(){
+					base64($('input[type="file"]'), function(data){
+						  //console.log(data.base64)
+						  dataImage = data.base64;
+						  JSONObject= {
+						             "filename": data.filename,
+						             "dataImage":data.base64
+						             };
+						  
+						})
+				
+				
+				}
+				
+				//Author James Harrington 2014
+				function base64(file, callback){
+				  var coolFile = {};
+				  function readerOnload(e){
+				    var base64 = btoa(e.target.result);
+				    coolFile.base64 = base64;
+				    callback(coolFile)
+				  };
+				
+				  var reader = new FileReader();
+				  reader.onload = readerOnload;
+				
+				  var file = file[0].files[0];
+				  
+				  coolFile.filename = file.name;
+				  reader.readAsBinaryString(file);
+				}
+				
+				
+				$('#sendData').click(function(){
+					alert(JSONObject.dataImage);
+						/*
+					  alert(JSONObject.dataImage);
+					  $.ajax({
+					  url: '/ITS/rest/upload/UploadImage',
+					  dataType: 'json',
+					  data: JSONObject,
+					  type: 'POST',
+					  success: function(data) {
+					    console.log(data);
+					    }
+					  });*/
+					  
+						var jqxhr = $.post( "/ITS/rest/upload/UploadImageToPoint", { tokenId: "c1b0148d-6f49-41e5-a677-fdb3946af914", pointId:"726ea016-128c-4f97-873d-2db0dcc275d7", dataImage: JSONObject.dataImage, filename: JSONObject.filename})
+						.done(function(data) {
+							//alert( data.description + "_"+ data.status + "_" + data.link);
+						})
+						.fail(function() {
+							alert( "error" );
+						});
+					  
+					});
+				
+				</script>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>Upload Image With Lat-Lon Services</td>
+			<td>
+				<!--  <input id="fileInpputLatLon" type="file" onchange="encodeImageFileAsURL();"/> -->
+				<input id="sendDataLatLon" type="submit" />
+				<script type='text/javascript'>
+				var dataImage;
+				var JSONObject = {};
+				function encodeImageFileAsURL(){
+					base64($('input[type="file"]'), function(data){
+						  //console.log(data.base64)
+						  dataImage = data.base64;
+						  JSONObject= {
+						             "filename": data.filename,
+						             "dataImage":data.base64
+						             };
+						  
+						})
+				
+				
+				}
+				
+				//Author James Harrington 2014
+				function base64(file, callback){
+				  var coolFile = {};
+				  function readerOnload(e){
+				    var base64 = btoa(e.target.result);
+				    coolFile.base64 = base64;
+				    callback(coolFile)
+				  };
+				
+				  var reader = new FileReader();
+				  reader.onload = readerOnload;
+				
+				  var file = file[0].files[0];
+				  
+				  coolFile.filename = file.name;
+				  reader.readAsBinaryString(file);
+				}
+				
+				
+				$('#sendDataLatLon').click(function(){
+					alert(JSONObject.dataImage);
+						/*
+					  alert(JSONObject.dataImage);
+					  $.ajax({
+					  url: '/ITS/rest/upload/UploadImage',
+					  dataType: 'json',
+					  data: JSONObject,
+					  type: 'POST',
+					  success: function(data) {
+					    console.log(data);
+					    }
+					  });*/
+					  
+						var jqxhr = $.post( "/ITS/rest/upload/UploadImageWithLatLon", { tokenId: "c1b0148d-6f49-41e5-a677-fdb3946af914", tripId: "317e5cc8-b2e4-48e5-93e3-8efaa4a02cfe", x:"a0"
+							, y: "a0", z:"a0", fromZ:"a0",locationName:"a0" ,pointDescription:"a0",order: "a0", dataImage: JSONObject.dataImage, filename: JSONObject.filename})
+						.done(function(data) {
+							//alert( data.description + "_"+ data.status + "_" + data.link);
+						})
+						.fail(function() {
+							alert( "error" );
+						});
+					  
+					});
+				
+				</script>
+			</td>
+		</tr>
+		
+	</table>
+</body>
+</html>

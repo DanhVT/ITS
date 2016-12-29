@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>ITS</title>
+<link rel="stylesheet" type="text/css" href="css/navigation.css">
+<script
+	src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="js/jquery-1.7.1.min.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/context-menu.js"></script>
+</head>
+<body>
+	<div id="map-canvas" style="float: left; width: 65%;" ></div>
+	<div id="control_panel"
+		style="float: right; width: 35%; text-align: left;">
+
+		<div id="input-panel" style="margin: 5px;">
+			<fieldset>
+				<legend>Query</legend>
+				<ol>
+					<li><label for="time">Time: </label> <input type="text"
+						value="" id="time"></li>
+					<li><label for="weight">Weight: </label> <input type="text"
+						value="" id="weight"></li>
+					<li><label for="load">Load: </label> <input type="text"
+						value="" id="load"></li>
+					<li><label for="totalLoad">Total Load: </label> <input type="text"
+						value="" id="totalLoad"></li>
+						
+						
+					<li><label for="srcLat">Src Lat: </label> <input type="text"
+						value="" id="srcLat"></li>
+					<li><label for="srcLng">Src Lng: </label> <input type="text"
+						value="" id="srcLng"></li>
+					<li><label for="srcSegment">Src Segment: </label> <input
+						type="text" value="" id="srcSegment"></li>
+					<li><label for="destLat">Dest Lat: </label> <input type="text"
+						value="" id="destLat"></li>
+					<li><label for="destLng">Dest Lng: </label> <input type="text"
+						value="" id="destLng"></li>
+					<li><label for="destSegment">Dest Segment: </label> <input
+						type="text" value="" id="destSegment"></li>
+					<li><label for="algo">Criterion: </label> <select id="algo">
+							<option value="distance">Distance</option>
+							<option value="static_time">Static time</option>
+							<option value="profile_time">Profile time</option>
+							<option value="preference">Preference</option>
+							<option value="real_time">Real time</option>
+							<option value="truck">Truck</option>
+					</select></li>
+					<!-- 
+					<li><label for="x">cellX: </label> <input type="text"
+						value="10" id="x"></li>
+					<li><label for="y">cellY: </label> <input type="text"
+						value="10" id="y"></li>
+						 -->
+				</ol>
+			</fieldset>
+			<fieldset class="submit">
+				<input class="submit" type="submit" value="Route"
+					onclick="calcRoute();">
+					 
+					<input class="submit" type="submit" value="View Segments"
+					onclick="viewSerachingBox();">
+					
+					<input class="submit" type="submit"
+					value="Refresh" onclick="initialize();">
+			</fieldset>
+		</div>
+
+		<div id="directions-panel" style="margin: 20px;"></div>
+
+	</div>
+</body>
+</html>
